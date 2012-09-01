@@ -6,6 +6,7 @@ An extension for the amazing airbrake gem which routes crash reports to HockeyAp
 
 Add this to your Gemfile
 ```ruby
+gem 'airbrake'
 gem 'hockeybrake', :git => 'git://github.com/dei79/hockeybrake.git'
 ```
 
