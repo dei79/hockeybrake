@@ -15,16 +15,12 @@ module HockeyBrake
     # @param [String] data The XML notice to be sent off
     def send_to_airbrake(data)
 
-      # generate our time string
-      dtstr = Time.now.strftime("%a %b %d %H:%M:%S %Z %Y")
+      # generate the log
+      logstr = HockeyLog.generate(data)
 
       # store the data into temp file
       file = Tempfile.new('hockey-exception')
-      file.write("Package: #{HockeyBrake.configuration.app_bundle_id}\n")
-      file.write("Version: #{HockeyBrake.configuration.app_version}\n")
-      file.write("Date: #{dtstr}\n");
-      file.write("\n")
-      file.write(data)
+      file.write(logstr)
       file.close
 
       # buidl the url
