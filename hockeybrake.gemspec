@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Dirk Eisenberg"]
   s.email       = ["dirk.eisenberg@gmail.com"]
   s.homepage    = 'http://rubygems.org/gems/hockeybrake'
-  s.summary     = %q{An extension for the amazing airbrake gem which routes crash reports the HockeyApp}
-  s.description = %q{An extension for the amazing airbrake gem which routes crash reports the HockeyApp}
+  s.summary     = %q{An extension for the amazing airbrake gem which routes crash reports to HockeyApp}
+  s.description = %q{An extension for the amazing airbrake gem which routes crash reports to HockeyApp}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
