@@ -1,6 +1,6 @@
 # HockeyBrake
 
-An extension for the amzing airbrake gem which routes crash reports the HockeyApp
+An extension for the amazing airbrake gem which routes crash reports the HockeyApp
 
 ## Installation 
 
