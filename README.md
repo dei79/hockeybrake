@@ -45,3 +45,7 @@ Resque comes with out of the box support for Airbrake. This gem is compatible wi
 * Fork the project
 * Fix the issue
 * Create pull request on github
+
+## More Information
+
+* Check out the HockeyApp documentation for custom crash reports: http://support.hockeyapp.net/kb/api/api-post-custom-crashes
