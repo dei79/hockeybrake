@@ -18,31 +18,27 @@ module HockeyBrake
       # generate the log
       logstr = HockeyLog.generate(data)
 
-      # store the data into temp file
-      file = Tempfile.new('hockey-exception')
-      file.write(logstr)
-      file.close
+      # generate the stirng io
+      logio = StringIO.new(logstr)
 
       # buidl the url
       url = URI.parse(HockeyBrake.configuration.hockey_url)
 
       # send the request
       response = begin
-        File.open(file.path) do |log|
 
-          req = Net::HTTP::Post::Multipart.new url.path,
-                                               "log" => UploadIO.new(log, 'application/octet-stream', "log.txt")
-          Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https') do |http|
-            http.request(req)
-          end
+        # build the request
+        req = Net::HTTP::Post::Multipart.new( url.path, "log" => UploadIO.new(logio, 'application/octet-stream', "log.txt") )
+
+        # start the upload
+        Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https') do |http|
+          http.request(req)
         end
+
       rescue *HTTP_ERRORS => e
         log :error, "Unable to contact the HockeyApp server. HTTP Error=#{e}"
         nil
       end
-
-      # remove the file
-      file.unlink
 
       case response
         when Net::HTTPSuccess then
