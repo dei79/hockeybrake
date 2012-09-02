@@ -8,3 +8,4 @@ log/*.log
 Icon?
 ehthumbs.db
 Thumbs.db
+.gem
