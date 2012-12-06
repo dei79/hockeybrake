@@ -32,24 +32,57 @@ module HockeyBrake
 
       # parse the XML and convert them to the HockeyApp format
       begin
-        # xml parser
-        crashData = Hash.from_xml(data)
-
-        # write the first line
-        output += "#{crashData['notice']['error']['class']}: #{crashData['notice']['error']['message']}\n"
-
-        # parse the lines
-        lines = crashData['notice']['error']['backtrace']['line']
-        lines.each do |line|
-          class_name =   File.basename(line['file'], ".rb").classify
-          output += "    at #{class_name}##{line['method']}(#{line['file']}:#{line['number']})\n"
+        if ( data.is_a?(String))
+          output += generate_from_xml(data)
+        else
+          output += generate_from_notice(data)
         end
-      rescue
+      rescue Exception => e
         # nothing to do
+        output += "An exception was thrown during handling of the exception from the HockeyBrake injector\n"
+        output += "Exception: #{e.message}"
       end
 
       # return the output
       output
     end
+
+    def self.generate_from_notice(data)
+      output = ""
+
+      # write the first line
+      output += "#{data.error_class}: #{data.error_message}\n"
+
+      # generate the call stacke
+      data.backtrace.lines.each do |line|
+        class_name =   File.basename(line.file, ".rb").classify
+        output += "    at #{class_name}##{line.method}(#{line.file}:#{line.number})\n"
+      end
+
+      # emit
+      output
+    end
+
+    def self.generate_from_xml(data)
+      # the output
+      output = ""
+
+      # xml parser
+      crashData = Hash.from_xml(data)
+
+      # write the first line
+      output += "#{crashData['notice']['error']['class']}: #{crashData['notice']['error']['message']}\n"
+
+      # parse the lines
+      lines = crashData['notice']['error']['backtrace']['line']
+      lines.each do |line|
+        class_name =   File.basename(line['file'], ".rb").classify
+        output += "    at #{class_name}##{line['method']}(#{line['file']}:#{line['number']})\n"
+      end
+
+      # emit
+      output
+    end
   end
+
 end

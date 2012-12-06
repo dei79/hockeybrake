@@ -1,5 +1,6 @@
 # using multipart post
 require 'net/http/post/multipart'
+require 'airbrake'
 
 module HockeyBrake
   # Sends out the notice to HockeyApp
@@ -51,7 +52,7 @@ module HockeyBrake
         error_id = response.body.match(%r{<id[^>]*>(.*?)</id>})
         error_id[1] if error_id
       end
-    rescue => e
+    rescue Exception => e
       log :error, "[HockeyBrake::HockeySender#send_to_airbrake] Cannot send notification. Error: #{e.class} - #{e.message}\nBacktrace:\n#{e.backtrace.join("\n\t")}"
       nil
     end
