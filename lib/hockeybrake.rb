@@ -1,4 +1,5 @@
 require 'hockeybrake/configuration'
+require 'hockeybrake/hockey_log_exception'
 require 'hockeybrake/hockey_log'
 require 'hockeybrake/hockey_sender'
 require 'hockeybrake/hockey_sender_injector'
@@ -23,8 +24,8 @@ module HockeyBrake
 
           Resque::Failure::Multiple.classes = [Resque::Failure::Redis, Resque::Failure::Airbrake]
           Resque::Failure.backend = Resque::Failure::Multiple
-        rescue
-          # nothing to do
+        rescue LoadError
+          # No resquem it's ok
         end
 
       end

@@ -10,3 +10,4 @@ ehthumbs.db
 Thumbs.db
 .gem
 .idea/
+Gemfile.lock

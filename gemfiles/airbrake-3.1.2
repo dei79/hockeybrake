@@ -5,7 +5,7 @@ gem 'rspec'
 gem 'shoulda'
 gem 'rails'
 
-gem 'airbrake'
+gem 'airbrake', '=3.1.2'
 
 group :test do
   gem "guard-rspec"
@@ -13,6 +13,6 @@ group :test do
 end
 
 # Specify your gem's dependencies in hockeybrake.gemspec
-gemspec
+gemspec :path => '../'
 
 

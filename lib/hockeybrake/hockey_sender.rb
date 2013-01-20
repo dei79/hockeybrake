@@ -17,7 +17,7 @@ module HockeyBrake
     def send_to_airbrake(data)
 
       # generate the log
-      logstr = HockeyLog.generate(data)
+      logstr = HockeyLog.generate_safe(data)
 
       # generate the stirng io
       logio = StringIO.new(logstr)

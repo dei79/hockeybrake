@@ -1,3 +1,5 @@
+require 'active_support/core_ext'
+
 #
 # This class converts the given Airbrake XML data to the log format of the HockeyApp server
 #
@@ -6,45 +8,55 @@ module HockeyBrake
 
     #
     # Generates a string which can be sent to the hockey service
-    #
-    def self.generate(data)
-      # the output
-      output = ""
-
-      # generate our time string
-      dtstr = Time.now.strftime("%a %b %d %H:%M:%S %Z %Y")
-
-      # write the header so that we have something to send
-      output += "Package: #{HockeyBrake.configuration.app_bundle_id}\n"
-      output += "Version: #{HockeyBrake.configuration.app_version}\n"
-      output += "Date: #{dtstr}\n"
-
-      # add the optional values if possible
+    def self.generate_safe(data)
       begin
-        output += "Android: #{RUBY_PLATFORM}\n"
-        output += "Model: Ruby #{RUBY_VERSION} Rails #{Rails.version}\n"
-      rescue
-        # nothing to do
+        output = HockeyLog.generate(data)
+      rescue HockeyBrake::HockeyLogException => e
+        output += e.message
       end
 
-      # add the empty line
-      output += "\n"
+      # go ahead
+      output
+    end
 
-      # parse the XML and convert them to the HockeyApp format
+    #
+    # Generates a string which can be sent to the hockey service
+    def self.generate(data)
       begin
+        # the output
+        output = ""
+
+        # generate our time string
+        dtstr = Time.now.strftime("%a %b %d %H:%M:%S %Z %Y")
+
+        # write the header so that we have something to send
+        output += "Package: #{HockeyBrake.configuration.app_bundle_id}\n"
+        output += "Version: #{HockeyBrake.configuration.app_version}\n"
+        output += "Date: #{dtstr}\n"
+
+        # add the optional values if possible
+        begin
+          output += "Android: #{RUBY_PLATFORM}\n"
+          output += "Model: Ruby #{RUBY_VERSION} Rails #{Rails.version}\n"
+        rescue
+          # nothing to do
+        end
+
+        # add the empty line
+        output += "\n"
+
+        # parse the XML and convert them to the HockeyApp format
         if ( data.is_a?(String))
           output += generate_from_xml(data)
         else
           output += generate_from_notice(data)
         end
-      rescue Exception => e
-        # nothing to do
-        output += "An exception was thrown during handling of the exception from the HockeyBrake injector\n"
-        output += "Exception: #{e.message}"
-      end
 
-      # return the output
-      output
+        # return the output
+        output
+      rescue Exception => e
+        raise HockeyLogException.new(e)
+      end
     end
 
     def self.generate_from_notice(data)

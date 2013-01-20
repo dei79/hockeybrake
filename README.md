@@ -2,6 +2,8 @@
 
 An extension for the amazing airbrake gem which routes crash reports to HockeyApp
 
+[![Build Status](https://secure.travis-ci.org/dei79/hockeybrake.png)](http://travis-ci.org/dei79/hockeybrake)
+
 ## Installation 
 
 Add this to your Gemfile
@@ -44,6 +46,7 @@ Resque comes with out of the box support for Airbrake. This gem is compatible wi
  
 * Fork the project
 * Fix the issue
+* Add specs
 * Create pull request on github
 
 ## More Information
