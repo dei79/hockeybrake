@@ -9,3 +9,4 @@ gemfile:
   - gemfiles/airbrake-3.1.4
   - gemfiles/airbrake-3.1.5
   - gemfiles/airbrake-3.1.6
+  - gemfiles/airbrake-3.1.16
