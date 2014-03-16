@@ -3,6 +3,7 @@
 An extension for the amazing airbrake gem which routes crash reports to HockeyApp
 
 [![Build Status](https://secure.travis-ci.org/dei79/hockeybrake.png)](http://travis-ci.org/dei79/hockeybrake)
+[![Gem Version](https://badge.fury.io/rb/hockeybrake.png)](http://badge.fury.io/rb/hockeybrake)
 
 ## Installation 
 
