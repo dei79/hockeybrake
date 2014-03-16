@@ -28,7 +28,7 @@ module HockeyBrake
       # send the request
       response = begin
 
-        # build the request
+                   # build the request
         req = Net::HTTP::Post::Multipart.new( url.path, "log" => UploadIO.new(logio, 'application/octet-stream', "log.txt") )
 
         # start the upload
@@ -37,15 +37,15 @@ module HockeyBrake
         end
 
       rescue *HTTP_ERRORS => e
-        log :error, "Unable to contact the HockeyApp server. HTTP Error=#{e}"
+        log_internal  :level => :error, :message => "Unable to contact the HockeyApp server. HTTP Error=#{e}"
         nil
       end
 
       case response
         when Net::HTTPSuccess then
-          log :info, "Success: #{response.class}", response
+          log_internal  :level => :info, :message => "Success: #{response.class}", :response => response
         else
-          log :error, "Failure: #{response.class}", response
+          log_internal  :level => :error, :message => "Failure: #{response.class}", :response => response
       end
 
       if response && response.respond_to?(:body)
@@ -53,8 +53,14 @@ module HockeyBrake
         error_id[1] if error_id
       end
     rescue Exception => e
-      log :error, "[HockeyBrake::HockeySender#send_to_airbrake] Cannot send notification. Error: #{e.class} - #{e.message}\nBacktrace:\n#{e.backtrace.join("\n\t")}"
+      log_internal  :level => :error,  :message => "[HockeyBrake::HockeySender#send_to_airbrake] Cannot send notification. Error: #{e.class} - #{e.message}\nBacktrace:\n#{e.backtrace.join("\n\t")}"
       nil
+    end
+
+    def log_internal(options = {})
+      log options
+    rescue
+      log options[:level], options[:message], options[:response]
     end
   end
 end
