@@ -47,10 +47,16 @@ module HockeyBrake
         output += "Version: #{HockeyBrake.configuration.app_version}\n"
         output += "Date: #{dtstr}\n"
 
+        # try to get the hostname
+        hostname = ""
+        begin
+          hostname = `hostname`.strip
+        rescue
+        end
         # add the optional values if possible
         begin
           output += "Android: #{RUBY_PLATFORM}\n"
-          output += "Model: Ruby #{RUBY_VERSION} Rails #{Rails.version}\n"
+          output += "Model: #{hostname} Ruby #{RUBY_VERSION} Rails #{Rails.version}\n"
         rescue
           # nothing to do
         end
