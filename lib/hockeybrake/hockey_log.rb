@@ -21,6 +21,19 @@ module HockeyBrake
 
     #
     # Generates a string which can be sent to the hockey service
+    # Package: PACKAGE NAME
+    # Version: VERSION
+    # OS: OS VERSION
+    # Manufacturer: DEVICE OEM
+    # Model: DEVICE MODEL
+    # Date: DATETIME
+
+    # EXCEPTION REASON STRING
+    # at CLASS.METHOD(FILE:LINE)
+    # at CLASS.METHOD(FILE:LINE)
+    # at CLASS.METHOD(FILE:LINE)
+    # at CLASS.METHOD(FILE:LINE)
+    # at CLASS.METHOD(FILE:LINE)
     def self.generate(data)
       begin
         # the output
@@ -59,20 +72,22 @@ module HockeyBrake
       end
     end
 
+    # EXCEPTION REASON STRING
+    # at CLASS.METHOD(FILE:LINE)
     def self.generate_from_notice(data)
       output = ""
 
       # write the first line
-      output += "#{data.error_class}: #{data.error_message}\n"
+      output += "#{data.error_message}\n"
 
       # generate the call stacke
       data.backtrace.lines.each do |line|
         class_name =   File.basename(line.file, ".rb").classify
 
         begin
-          output += "    at #{class_name}##{line.method}(#{line.file}:#{line.number})\n"
+          output += "    at #{class_name}.#{line.method}(#{line.file}:#{line.number})\n"
         rescue
-          output += "    at #{class_name}##{line.method_name}(#{line.file}:#{line.number})\n"
+          output += "    at #{class_name}.#{line.method_name}(#{line.file}:#{line.number})\n"
         end
       end
 
@@ -80,6 +95,8 @@ module HockeyBrake
       output
     end
 
+    # EXCEPTION REASON STRING
+    # at CLASS.METHOD(FILE:LINE)
     def self.generate_from_xml(data)
       # the output
       output = ""
@@ -94,7 +111,7 @@ module HockeyBrake
       lines = crashData['notice']['error']['backtrace']['line']
       lines.each do |line|
         class_name =   File.basename(line['file'], ".rb").classify
-        output += "    at #{class_name}##{line['method']}(#{line['file']}:#{line['number']})\n"
+        output += "    at #{class_name}.#{line['method']}(#{line['file']}:#{line['number']})\n"
       end
 
       # emit
