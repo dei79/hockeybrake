@@ -13,6 +13,10 @@ module HockeyBrake
     # Allow to disable resque support
     attr_accessor :no_resque_handler
 
+    # Allow to disable sidekiq suppoer
+    attr_accessor :no_sidekiq_handler
+
+
     # The service url
     def hockey_url
       "https://rink.hockeyapp.net/api/2/apps/#{app_id}/crashes/upload"

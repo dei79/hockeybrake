@@ -25,9 +25,14 @@ HockeyBrake.configure do |config|
   # as version, otherwise use the name of your version 
   config.app_version="#{Rails.env}"
 
-  # Support for resque exception handling is enabled by default. Wit this
+  # Support for resque exception handling is enabled by default. With this
   # settings the resque support will be disabled. If no resque gem is installed
   # it will be disabled automatically
   # config.no_resque_handler = true
 
+
+  # Support for sidekiq exception handling is enabled by default. With this
+  # settings the sidekiq support will be disabled. If no sidekiq gem is installed
+  # it will be disabled automatically
+  # config.no_sidekiq_handler = true
 end
