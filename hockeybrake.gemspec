@@ -9,14 +9,15 @@ Gem::Specification.new do |s|
   s.email       = ["dirk.eisenberg@gmail.com"]
   s.homepage    = 'http://rubygems.org/gems/hockeybrake'
   s.summary     = %q{An extension for the amazing airbrake gem which routes crash reports to HockeyApp}
-  s.description = %q{An extension for the amazing airbrake gem which routes crash reports to HockeyApp}
+  s.description = %q{An extension for the amazing airbrake gem which routes crash reports directly to HockeyApp}
+  s.license     = "MIT"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency(%q<airbrake>, [">= 3.1.2"])
-  s.add_runtime_dependency(%q<multipart-post>, [">= 1.1.5"])
-  s.add_runtime_dependency(%q<activesupport>)
+  s.add_runtime_dependency(%q<airbrake>, ["~> 3.1", ">= 3.1.2"])
+  s.add_runtime_dependency(%q<multipart-post>, ['~> 1.1', ">= 1.1.5"])
+  s.add_runtime_dependency(%q<activesupport>, ['~> 0'])
 end
