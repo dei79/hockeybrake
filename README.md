@@ -45,7 +45,7 @@ Resque comes with out of the box support for Airbrake. This gem is compatible wi
 
 ## Authors
 
-* [![endorse](https://api.coderwall.com/dei79/endorsecount.png)](https://coderwall.com/dei79)
+* Dirk Eisenberg [![endorse](https://api.coderwall.com/dei79/endorsecount.png)](https://coderwall.com/dei79)
 
 ## Contributing
  
