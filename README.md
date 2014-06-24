@@ -43,6 +43,10 @@ Resque comes with out of the box support for Airbrake. This gem is compatible wi
   config.no_resque_handler = true
 ``` 
 
+## Authors
+
+* [![endorse](https://api.coderwall.com/dei79/endorsecount.png)](https://coderwall.com/dei79)
+
 ## Contributing
  
 * Fork the project
